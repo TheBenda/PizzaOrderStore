@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Persistence.Model;
+namespace POS.Persistence.Model;
 
 public class OrderDetail
 {

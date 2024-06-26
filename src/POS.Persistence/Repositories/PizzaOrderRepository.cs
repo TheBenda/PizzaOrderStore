@@ -1,6 +1,7 @@
-namespace Persistence.Repositories;
+namespace POS.Persistence.Repositories;
 
 public class PizzaOrderRepository : IPizzaOrderRepository
 {
-    
+
+
 }

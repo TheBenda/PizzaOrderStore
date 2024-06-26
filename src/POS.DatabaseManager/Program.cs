@@ -1,11 +1,12 @@
-using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using POS.DatabaseManager;
+using POS.Persistence.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.AddServiceDefaults();
-builder.AddNpgsqlDbContext<Persistence.Data.PizzaOrderDbContext>("pizzaorderdb", null,
+builder.AddNpgsqlDbContext<PizzaOrderDbContext>("pizzaorderdb", null,
     optionsBuilder => optionsBuilder.UseNpgsql(npgsqlBuilder =>
         npgsqlBuilder.MigrationsAssembly(typeof(Program).Assembly.GetName().Name)));
 

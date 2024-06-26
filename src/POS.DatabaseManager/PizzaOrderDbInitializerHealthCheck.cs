@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Infrastructure;
+namespace POS.DatabaseManager;
 
 internal class PizzaOrderDbInitializerHealthCheck(PizzaOrderDbInitializer pizzaOrderDbInitializer) : IHealthCheck
 {

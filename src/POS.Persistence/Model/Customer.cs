@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Persistence.Model;
+namespace POS.Persistence.Model;
 
 public class Customer
 {
@@ -13,6 +13,7 @@ public class Customer
     public string? Address { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }
-    
+
+
     public ICollection<Order> Orders { get; set; } = null!;
 }

@@ -1,8 +1,12 @@
 using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using Persistence.Data;
 
-namespace Infrastructure;
+
+using Microsoft.EntityFrameworkCore;
+
+
+using POS.Persistence.Data;
+
+namespace POS.DatabaseManager;
 
 internal class PizzaOrderDbInitializer(IServiceProvider serviceProvider, ILogger<PizzaOrderDbInitializer> logger) : BackgroundService
 {

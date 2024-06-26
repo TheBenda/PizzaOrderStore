@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Persistence.Model;
+using POS.Persistence.Model;
 
-namespace Persistence.Data;
+namespace POS.Persistence.Data;
 
 public class PizzaOrderDbContext(DbContextOptions<PizzaOrderDbContext> options) : DbContext(options)
 {
@@ -24,7 +24,8 @@ public class PizzaOrderDbContext(DbContextOptions<PizzaOrderDbContext> options) 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
             entity.HasIndex(e => e.OrderId, "IX_OrderDetails_OrderId");
-            
+
+
             entity.HasIndex(e => e.ProductId, "IX_OrderDetails_ProductId");
         });
 
