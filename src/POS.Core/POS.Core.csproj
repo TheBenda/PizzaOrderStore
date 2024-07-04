@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.42.5" />
+    <PackageReference Include="FastEndpoints" Version="5.26.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Domain\POS.Domain.csproj" />
+    <ProjectReference Include="..\POS.AppHost.ServiceDefaults\POS.AppHost.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

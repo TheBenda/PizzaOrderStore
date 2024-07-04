@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
 using POS.Persistence.Data;
-using POS.Persistence.Model;
+using POS.Domain.Entities;
 namespace POS.Api.Apis;
 
 public static class CustomerApi
@@ -46,14 +46,14 @@ public static class CustomerApi
         .WithName("UpdateCustomer")
         .WithOpenApi();
 
-        group.MapPost("/", async (Customer customer, PizzaOrderDbContext db) =>
-        {
-            db.Customers.Add(customer);
-            await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/Customer/{customer.Id}",customer);
-        })
-        .WithName("CreateCustomer")
-        .WithOpenApi();
+        // group.MapPost("/", async (Customer customer, PizzaOrderDbContext db) =>
+        // {
+        //     db.Customers.Add(customer);
+        //     await db.SaveChangesAsync();
+        //     return TypedResults.Created($"/api/Customer/{customer.Id}",customer);
+        // })
+        // .WithName("CreateCustomer")
+        // .WithOpenApi();
 
         group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (Guid id, PizzaOrderDbContext db) =>
         {

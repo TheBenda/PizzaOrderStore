@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.42.5" />
     <PackageReference Include="FastEndpoints" Version="5.26.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\POS.Persistence\POS.Persistence.csproj" />
+    <ProjectReference Include="..\POS.Core\POS.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

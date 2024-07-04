@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
 using POS.Persistence.Data;
-using POS.Persistence.Model;
+using POS.Domain.Entities;
 namespace POS.Api.Apis;
 
 public static class OrderApi

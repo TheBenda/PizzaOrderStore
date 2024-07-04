@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using POS.Persistence.Model;
+using POS.Domain.Entities;
 
 namespace POS.Persistence.Data;
 

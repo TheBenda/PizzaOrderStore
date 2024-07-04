@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.AddNpgsqlDbContext<PizzaOrderDbContext>("pizzaorderdb", null,
     optionsBuilder => optionsBuilder.UseNpgsql(npgsqlBuilder =>
-        npgsqlBuilder.MigrationsAssembly(typeof(Program).Assembly.GetName().Name)));
+        npgsqlBuilder.MigrationsAssembly(typeof(POS.Persistence.DependencyInjection).Assembly.GetName().Name)));
 
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing.AddSource(PizzaOrderDbInitializer.ActivitySourceName));
