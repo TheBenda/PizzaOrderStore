@@ -8,9 +8,8 @@ namespace POS.IntegrationTests;
 
 public class PostgresTestcontainer : AppFixture<Program>
 {
-    private PostgreSqlContainer _postgreSqlContainer;
+    private PostgreSqlContainer? _postgreSqlContainer;
 
-    // Testcotainer startup & Migrations
     protected override async Task PreSetupAsync()
     {
         _postgreSqlContainer = new PostgreSqlBuilder()
@@ -31,11 +30,9 @@ public class PostgresTestcontainer : AppFixture<Program>
 
                 if(descriptor is not null) services.Remove(descriptor);
 
-                //var x = new ExecutionStrategy();
-
                 services.AddDbContext<PizzaOrderDbContext>(options =>
                 {
-                    options.UseNpgsql(_postgreSqlContainer.GetConnectionString(), npgsqlBuilder =>
+                    options.UseNpgsql(_postgreSqlContainer?.GetConnectionString(), npgsqlBuilder =>
                         npgsqlBuilder.MigrationsAssembly(typeof(POS.Persistence.DependencyInjection).Assembly.GetName().Name));
                 });
             }

@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
-      <PackageReference Include="CSharpFunctionalExtensions" Version="2.42.5" />
+      <PackageReference Include="CSharpFunctionalExtensions"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -16,5 +16,4 @@
       <ProjectReference Include="..\POS.AppHost.ServiceDefaults\POS.AppHost.ServiceDefaults.csproj" />
       <ProjectReference Include="..\POS.Domain\POS.Domain.csproj" />
     </ItemGroup>
-
 </Project>
