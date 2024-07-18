@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions"/>
-    <PackageReference Include="FastEndpoints"/>
+    <PackageReference Include="CSharpFunctionalExtensions" />
+    <PackageReference Include="FastEndpoints" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\POS.Domain\POS.Domain.csproj" />
     <ProjectReference Include="..\POS.AppHost.ServiceDefaults\POS.AppHost.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases/Customers/Create/" />
+    <Folder Include="UseCases/Customers/Get/" />
   </ItemGroup>
 
 </Project>

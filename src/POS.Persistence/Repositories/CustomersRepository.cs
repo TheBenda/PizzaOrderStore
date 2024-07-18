@@ -11,11 +11,11 @@ namespace POS.Persistence.Repositories;
 
 public class CustomersRepository(PizzaOrderDbContext _pizzaOrderDbContext) : ICustomersRepository
 {
-    public async Task<List<Customer>> GetCustomersAsync() => await _pizzaOrderDbContext.Customers.ToListAsync();
+    public async Task<List<Customer>> GetCustomersAsync(CancellationToken ct = default) => await _pizzaOrderDbContext.Customers.ToListAsync(ct);
 
-    public async Task<IResult<Customer, DomainError>> GetCustomerAsync(Guid id) => 
+    public async Task<IResult<Customer, DomainError>> GetCustomerAsync(Guid id, CancellationToken ct = default) => 
                 await _pizzaOrderDbContext.Customers.AsNoTracking()
-                .FirstOrDefaultAsync(model => model.Id == id) 
+                .FirstOrDefaultAsync(model => model.Id == id, ct) 
                 is Customer model ? 
                 Result.Success<Customer, DomainError>(model) : 
                 Result.Failure<Customer, DomainError>(DomainError.NotFound($"Customer with id: {id} not found."));
@@ -37,11 +37,11 @@ public class CustomersRepository(PizzaOrderDbContext _pizzaOrderDbContext) : ICu
             Result.Failure<DomainStatus, DomainError>(DomainError.NotFound($"Customer with id: {id} not found."));
     }
 
-    public async Task<IResult<Customer, DomainError>> CreateCustomer(Customer customer)
+    public async Task<IResult<Customer, DomainError>> CreateCustomer(Customer customer, CancellationToken ct = default)
     {
         try {
             _pizzaOrderDbContext.Customers.Add(customer);
-            await _pizzaOrderDbContext.SaveChangesAsync();
+            await _pizzaOrderDbContext.SaveChangesAsync(ct);
         
             return Result.Success<Customer, DomainError>(customer);
         } catch(Exception e) {

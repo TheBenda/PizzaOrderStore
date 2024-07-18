@@ -1,6 +1,6 @@
 ﻿using Bogus;
 
-using POS.Core.UseCases.Customers.Create;
+using POS.Api.Endpoints.Customers.Create;
 
 namespace POS.IntegrationTests.Customers;
 

@@ -2,12 +2,12 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
-using POS.AppHost.ServiceDefaults;
-using POS.Core.UseCases.Customers.Create;
+using POS.Core.Repositories;
+using POS.Domain.Entities;
 
 namespace POS.Api.Endpoints.Customers.Create;
 
-public sealed class CreateCustomerEndpoint : Endpoint<CreateCustomerRequest, Results<Created, Conflict>>
+public sealed class CreateCustomerEndpoint(ICustomersRepository _customersRepository) : Endpoint<CreateCustomerRequest, CreateCustomerResult>
 {
     public override void Configure()
     {
@@ -15,14 +15,52 @@ public sealed class CreateCustomerEndpoint : Endpoint<CreateCustomerRequest, Res
         AllowAnonymous();
     }
 
-    public override async Task<Results<Created, Conflict>> ExecuteAsync(CreateCustomerRequest req, CancellationToken ct)
+    public override async Task HandleAsync(CreateCustomerRequest req, CancellationToken ct)
     {
-        var res = await req.ExecuteAsync(ct);
-        
-        Results<Created, Conflict> apiResult = res.IsSuccess ? 
-            TypedResults.Created($"/api/Customer/{res.Value.CustomerId}") :
-            TypedResults.Conflict();
-        
-        return apiResult;
+        var createdCustomerResponse = await _customersRepository.CreateCustomer(ToEntity(req), ct);
+
+        if(createdCustomerResponse.IsSuccess)
+        {
+            var response = ToResponse(createdCustomerResponse.Value);
+            await SendOkAsync(response, ct);
+        }
+        else
+            await SendErrorsAsync(409, ct);
     }
+
+    private static Customer ToEntity(CreateCustomerRequest req) =>
+        new()
+        {
+            FirstName = req.FirstName,
+            LastName = req.LastName,
+            Address = req.Address,
+            Email = req.Email,
+            Phone = req.Phone
+        };
+    
+    private static CreateCustomerResult ToResponse(Customer customer) =>
+        new(
+            customer.Id,
+            customer.FirstName,
+            customer.LastName,
+            customer.Address,
+            customer.Phone,
+            customer.Email
+        );
 }
+
+public record CreateCustomerRequest(
+    string FirstName,
+    string LastName,
+    string? Address,
+    string? Phone,
+    string? Email);
+
+public record CreateCustomerResult(
+    Guid Id,
+    string FirstName,
+    string LastName,
+    string? Address,
+    string? Phone,
+    string? Email
+);
