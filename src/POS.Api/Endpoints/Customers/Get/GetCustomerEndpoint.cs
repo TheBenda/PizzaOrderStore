@@ -6,13 +6,6 @@ using POS.Core.Repositories;
 namespace POS.Api.Endpoints.Customers.Get;
 
 public record GetCustomerRequest(Guid CustomerId);
-// public record GetCustomerResponse(
-//     Guid Id,
-//     string FirstName,
-//     string LastName,
-//     string? Address,
-//     string? Phone,
-//     string? Email) : RepresentationModelBase;
 
 public class GetCustomerResponse : RepresentationModelBase
 {

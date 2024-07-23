@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using POS.Api.Endpoints.Customers.Create;
+﻿using POS.Api.Endpoints.Customers.Create;
+using POS.Api.Endpoints.Customers.Delete;
 using POS.Api.Endpoints.Customers.Get;
 using POS.Api.Endpoints.Customers.GetAll;
 using POS.Api.Hateoas;
-using POS.AppHost.ServiceDefaults;
 using POS.IntegrationTests.Customers;
 
 namespace POS.IntegrationTests.Endpoints.Customers;
@@ -14,7 +13,7 @@ public class CustomerIntegrationTests(PostgresTestcontainer _app) : BaseIntegrat
     public async Task Create_Valid_Customer()
     {
         var request = Fake.CreateCustomerRequest();
-        var (rsp, createCustomerResult) = await _app.Client.POSTAsync<CreateCustomerEndpoint, CreateCustomerRequest, CreateCustomerResult>(request);
+        var (rsp, createCustomerResult) = await ExecCreateCustomerEndpoint(request);
         
         rsp.IsSuccessStatusCode.Should().BeTrue();
         createCustomerResult.Should().NotBeNull();
@@ -29,7 +28,7 @@ public class CustomerIntegrationTests(PostgresTestcontainer _app) : BaseIntegrat
     public async Task Get_Valid_Customer()
     {
         var request = Fake.CreateCustomerRequest();
-        var (rsp, createCustomerResult) = await _app.Client.POSTAsync<CreateCustomerEndpoint, CreateCustomerRequest, CreateCustomerResult>(request);
+        var (rsp, createCustomerResult) = await ExecCreateCustomerEndpoint(request);
         
         rsp.IsSuccessStatusCode.Should().BeTrue();
 
@@ -50,10 +49,10 @@ public class CustomerIntegrationTests(PostgresTestcontainer _app) : BaseIntegrat
     public async Task Get_Valid_Customers()
     {
         var firstRequest = Fake.CreateCustomerRequest();
-        var (frsp, firstResult) = await _app.Client.POSTAsync<CreateCustomerEndpoint, CreateCustomerRequest, CreateCustomerResult>(firstRequest);
+        var (frsp, firstResult) = await ExecCreateCustomerEndpoint(firstRequest);
 
         var secondRequest = Fake.CreateCustomerRequest();
-        var (srsp, secondResult) = await _app.Client.POSTAsync<CreateCustomerEndpoint, CreateCustomerRequest, CreateCustomerResult>(secondRequest);
+        var (srsp, secondResult) = await ExecCreateCustomerEndpoint(secondRequest);
         
 
         var (getCustomersResponseContent, getCustomersResponse) = await _app.Client.GETAsync<GetAllCustomersEndpoint, CollectionModel<GetAllCustomersResponse, GetCustomerResponse>>();
@@ -62,5 +61,25 @@ public class CustomerIntegrationTests(PostgresTestcontainer _app) : BaseIntegrat
         getCustomersResponse.Should().NotBeNull();
         getCustomersResponse.Links.Should().BeEmpty();
         getCustomersResponse.Embedded.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public async Task Delete_Customer()
+    {
+        var request = Fake.CreateCustomerRequest();
+        var (rsp, createCustomerResult) = await ExecCreateCustomerEndpoint(request);
+
+        rsp.IsSuccessStatusCode.Should().BeTrue();
+
+        var deleteCustomerRequest = new DeleteCustomerRequest(createCustomerResult.Id);
+
+        var (deleteCustomerResponseContent, deleteCustomerResponse) =  await _app.Client.DELETEAsync<DeleteCustomerEndpoint, DeleteCustomerRequest, DeleteCustomerResponse>(deleteCustomerRequest);
+        deleteCustomerResponseContent.IsSuccessStatusCode.Should().BeTrue();
+        deleteCustomerResponse.Message.Should().NotBeEmpty();
+    }
+
+    private Task<TestResult<CreateCustomerResult>> ExecCreateCustomerEndpoint(CreateCustomerRequest request)
+    {
+        return _app.Client.POSTAsync<CreateCustomerEndpoint, CreateCustomerRequest, CreateCustomerResult>(request);
     }
 }

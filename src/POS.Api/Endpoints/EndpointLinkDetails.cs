@@ -10,4 +10,9 @@ public static class EndpointLinkDetaisBuilder
     {
         return new EndpointLinkDetails(endpoint.HttpContext, endpoint.Definition.Routes);
     }
+
+    public static EndpointLinkDetails EndpointLinkDetailsFromEndpointWithoutRequest<TResponse>(this EndpointWithoutRequest<TResponse> endpointWithoutRequest)
+    {
+        return new EndpointLinkDetails(endpointWithoutRequest.HttpContext, endpointWithoutRequest.Definition.Routes);
+    }
 }

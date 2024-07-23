@@ -15,5 +15,5 @@ public interface ICustomersRepository
 
     public Task<IResult<Customer, DomainError>> CreateCustomer(Customer customer, CancellationToken ct = default);
 
-    public Task<IResult<DomainStatus, DomainError>> DeleteCustomer(Guid id);
+    public Task<IResult<DomainStatus, DomainError>> DeleteCustomer(Guid id, CancellationToken ct = default);
 }

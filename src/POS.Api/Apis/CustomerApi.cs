@@ -27,15 +27,5 @@ public static class CustomerApi
         })
         .WithName("UpdateCustomer")
         .WithOpenApi();
-
-        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (Guid id, PizzaOrderDbContext db) =>
-        {
-            var affected = await db.Customers
-                .Where(model => model.Id == id)
-                .ExecuteDeleteAsync();
-            return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
-        })
-        .WithName("DeleteCustomer")
-        .WithOpenApi();
     }
 }

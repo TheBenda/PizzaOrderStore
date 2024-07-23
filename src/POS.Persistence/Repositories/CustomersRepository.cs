@@ -50,11 +50,11 @@ public class CustomersRepository(PizzaOrderDbContext _pizzaOrderDbContext) : ICu
         }
     }
 
-    public async Task<IResult<DomainStatus, DomainError>> DeleteCustomer(Guid id)
+    public async Task<IResult<DomainStatus, DomainError>> DeleteCustomer(Guid id, CancellationToken ct = default)
     {
         var affected = await _pizzaOrderDbContext.Customers
                 .Where(model => model.Id == id)
-                .ExecuteDeleteAsync();
+                .ExecuteDeleteAsync(ct);
         
         return affected == 1 ? Result.Success<DomainStatus, DomainError>(DomainStatus.OK($"Deleted Custumer with id: {id}")) : 
             Result.Failure<DomainStatus, DomainError>(DomainError.NotFound($"Customer with id: {id} not found."));

@@ -17,7 +17,7 @@ public sealed class GetAllCustomersEndpoint(ICustomersRepository _customersRepos
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var details = this.EndpointLinkDetailsFromEndpoint();
+        var details = this.EndpointLinkDetailsFromEndpointWithoutRequest();
         var customers = await _customersRepository.GetCustomersAsync(ct);
 
         var resourceCollection = _customersLinkAssembler.GetAllCustomersResponse(customers, details);
